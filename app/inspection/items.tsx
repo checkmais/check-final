@@ -20,7 +20,7 @@ import { Ionicons } from "@expo/vector-icons";
 export default function ItemsScreen() {
   const router = useRouter();
   const { areaType, roomName } = useLocalSearchParams<{ areaType: string; roomName: string }>();
-  const { state } = useInspection();
+  const { state, saveRoom } = useInspection();
 
   const baseChecklist = areaType === "internal" ? INTERNAL_CHECKLIST : EXTERNAL_CHECKLIST;
 
@@ -168,6 +168,16 @@ export default function ItemsScreen() {
     if (Platform.OS !== "web") {
       await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
     }
+
+    // Salvar cômodo completo no contexto global
+    saveRoom({
+      id: `${areaType}_${roomName}_${Date.now()}`,
+      roomName: roomName as string,
+      areaType: areaType as "internal" | "external",
+      sections,
+      observations,
+      createdAt: new Date().toISOString(),
+    });
 
     router.push("/inspection/summary");
   };

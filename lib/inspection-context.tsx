@@ -62,12 +62,37 @@ export interface InspectionItem {
   description: string;
 }
 
+// Novo: representa um cômodo completo com checklist
+export interface RoomData {
+  id: string;
+  roomName: string;
+  areaType: "internal" | "external";
+  sections: Array<{
+    id: string;
+    title: string;
+    tests: Array<{
+      id: string;
+      description: string;
+      status: string;
+      photos: Array<{
+        id: string;
+        uri: string;
+        caption: string;
+        timestamp: string;
+      }>;
+    }>;
+  }>;
+  observations: string;
+  createdAt: string;
+}
+
 export interface InspectionState {
   type: InspectionType | null;
   client: ClientData;
   vistoriador: VistoriadorData;
   conditions: InspectionConditions;
   items: InspectionItem[];
+  rooms: RoomData[]; // Novo: lista de cômodos com checklist completo
   createdAt: string;
   updatedAt: string;
 }
@@ -80,6 +105,7 @@ export interface InspectionContextType {
   updateConditions: (data: Partial<InspectionConditions>) => void;
   addPhoto: (photo: InspectionPhoto) => void;
   updateItem: (itemId: string, data: Partial<InspectionItem>) => void;
+  saveRoom: (room: RoomData) => void; // Novo
   reset: () => void;
 }
 
@@ -124,6 +150,7 @@ const defaultState: InspectionState = {
     occupancy: "empty",
   },
   items: [],
+  rooms: [],
   createdAt: new Date().toISOString(),
   updatedAt: new Date().toISOString(),
 };
@@ -135,6 +162,7 @@ type Action =
   | { type: "UPDATE_CONDITIONS"; payload: Partial<InspectionConditions> }
   | { type: "ADD_PHOTO"; payload: InspectionPhoto }
   | { type: "UPDATE_ITEM"; payload: { itemId: string; data: Partial<InspectionItem> } }
+  | { type: "SAVE_ROOM"; payload: RoomData }
   | { type: "RESET" };
 
 function inspectionReducer(state: InspectionState, action: Action): InspectionState {
@@ -142,23 +170,11 @@ function inspectionReducer(state: InspectionState, action: Action): InspectionSt
     case "SET_INSPECTION_TYPE":
       return { ...state, type: action.payload, updatedAt: new Date().toISOString() };
     case "UPDATE_CLIENT":
-      return {
-        ...state,
-        client: { ...state.client, ...action.payload },
-        updatedAt: new Date().toISOString(),
-      };
+      return { ...state, client: { ...state.client, ...action.payload }, updatedAt: new Date().toISOString() };
     case "UPDATE_VISTORIADOR":
-      return {
-        ...state,
-        vistoriador: { ...state.vistoriador, ...action.payload },
-        updatedAt: new Date().toISOString(),
-      };
+      return { ...state, vistoriador: { ...state.vistoriador, ...action.payload }, updatedAt: new Date().toISOString() };
     case "UPDATE_CONDITIONS":
-      return {
-        ...state,
-        conditions: { ...state.conditions, ...action.payload },
-        updatedAt: new Date().toISOString(),
-      };
+      return { ...state, conditions: { ...state.conditions, ...action.payload }, updatedAt: new Date().toISOString() };
     case "ADD_PHOTO":
       return {
         ...state,
@@ -173,12 +189,18 @@ function inspectionReducer(state: InspectionState, action: Action): InspectionSt
       return {
         ...state,
         items: state.items.map((item) =>
-          item.id === action.payload.itemId
-            ? { ...item, ...action.payload.data }
-            : item
+          item.id === action.payload.itemId ? { ...item, ...action.payload.data } : item
         ),
         updatedAt: new Date().toISOString(),
       };
+    case "SAVE_ROOM": {
+      // Substitui o cômodo se já existir, senão adiciona
+      const exists = state.rooms.find((r) => r.id === action.payload.id);
+      const updatedRooms = exists
+        ? state.rooms.map((r) => (r.id === action.payload.id ? action.payload : r))
+        : [...state.rooms, action.payload];
+      return { ...state, rooms: updatedRooms, updatedAt: new Date().toISOString() };
+    }
     case "RESET":
       return { ...defaultState, createdAt: new Date().toISOString() };
     default:
@@ -199,6 +221,7 @@ export function InspectionProvider({ children }: { children: React.ReactNode }) 
     updateConditions: (data) => dispatch({ type: "UPDATE_CONDITIONS", payload: data }),
     addPhoto: (photo) => dispatch({ type: "ADD_PHOTO", payload: photo }),
     updateItem: (itemId, data) => dispatch({ type: "UPDATE_ITEM", payload: { itemId, data } }),
+    saveRoom: (room) => dispatch({ type: "SAVE_ROOM", payload: room }),
     reset: () => dispatch({ type: "RESET" }),
   };
 

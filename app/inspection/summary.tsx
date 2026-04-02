@@ -4,8 +4,7 @@ import { ScreenContainer } from "@/components/screen-container";
 import { LargeButton } from "@/components/large-button";
 import { useInspection } from "@/lib/inspection-context";
 import { useState } from "react";
-import { saveInspection } from "@/lib/storage-service";
-import * as FileSystem from "expo-file-system";
+import { saveInspection, savePhotos } from "@/lib/storage-service";
 
 export default function SummaryScreen() {
   const router = useRouter();
@@ -35,27 +34,8 @@ export default function SummaryScreen() {
   const handleFinalize = async () => {
     setSaving(true);
     try {
-      // 1. Salvar vistoria (cria pasta e metadata.json)
       const saved = await saveInspection(state);
-
-      // 2. Copiar fotos para pasta permanente
-      const photosDir = `${saved.folderPath}/fotos`;
-      await FileSystem.makeDirectoryAsync(photosDir, { intermediates: true });
-
-      let photoCount = 0;
-      for (const item of state.items) {
-        for (const photo of item.photos) {
-          try {
-            const ext = photo.uri.split(".").pop() || "jpg";
-            const fileName = `${item.id}_${photo.id}.${ext}`;
-            const dest = `${photosDir}/${fileName}`;
-            await FileSystem.copyAsync({ from: photo.uri, to: dest });
-            photoCount++;
-          } catch (e) {
-            console.warn("Erro ao copiar foto:", e);
-          }
-        }
-      }
+      const photoCount = await savePhotos(saved.folderPath, state.items, state.rooms);
 
       setSaving(false);
       Alert.alert(
@@ -65,11 +45,7 @@ export default function SummaryScreen() {
       );
     } catch (error) {
       setSaving(false);
-      Alert.alert(
-        "Erro ao salvar",
-        "Não foi possível salvar a vistoria. Tente novamente.",
-        [{ text: "OK" }]
-      );
+      Alert.alert("Erro ao salvar", "Não foi possível salvar a vistoria. Tente novamente.");
       console.error("Erro ao finalizar:", error);
     }
   };
@@ -185,27 +161,36 @@ export default function SummaryScreen() {
             )}
           </View>
 
-          {/* Itens */}
+          {/* Cômodos */}
           <View style={{ gap: 8 }}>
             <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", paddingVertical: 12 }}>
-              <Text style={{ fontSize: 16, fontWeight: "600", color: "#111" }}>Itens Vistoriados</Text>
+              <Text style={{ fontSize: 16, fontWeight: "600", color: "#111" }}>Cômodos Vistoriados</Text>
               <Pressable onPress={() => router.push("/inspection/room-selection")} style={{ paddingHorizontal: 12, paddingVertical: 4, backgroundColor: "#0a7ea4", borderRadius: 99 }}>
                 <Text style={{ fontSize: 12, fontWeight: "600", color: "white" }}>+ Adicionar</Text>
               </Pressable>
             </View>
             <SectionCard>
-              {state.items.length === 0 ? (
+              {state.rooms.length === 0 ? (
                 <Text style={{ fontSize: 13, color: "#888", textAlign: "center", paddingVertical: 8 }}>
-                  Nenhum item vistoriado ainda
+                  Nenhum cômodo vistoriado ainda
                 </Text>
               ) : (
-                <>
-                  <InfoRow label="Total de itens" value={String(state.items.length)} />
-                  <InfoRow label="Aprovados" value={String(state.items.filter(i => i.status === "approved").length)} />
-                  <InfoRow label="Reprovados" value={String(state.items.filter(i => i.status === "rejected").length)} />
-                  <InfoRow label="N/A" value={String(state.items.filter(i => i.status === "na").length)} />
-                  <InfoRow label="Fotos" value={String(state.items.reduce((acc, i) => acc + i.photos.length, 0))} />
-                </>
+                state.rooms.map((room) => {
+                  const allTests = room.sections.flatMap((s) => s.tests);
+                  const aprovados = allTests.filter((t) => t.status === "approved").length;
+                  const reprovados = allTests.filter((t) => t.status === "rejected").length;
+                  const fotos = allTests.reduce((acc, t) => acc + t.photos.length, 0);
+                  return (
+                    <View key={room.id} style={{ paddingVertical: 8, borderBottomWidth: 0.5, borderBottomColor: "#f0f0f0" }}>
+                      <Text style={{ fontSize: 13, fontWeight: "600", color: "#111" }}>
+                        {room.roomName} <Text style={{ fontSize: 11, color: "#888", fontWeight: "400" }}>({room.areaType === "internal" ? "Interna" : "Externa"})</Text>
+                      </Text>
+                      <Text style={{ fontSize: 12, color: "#888", marginTop: 2 }}>
+                        ✓ {aprovados} aprovados · ✗ {reprovados} reprovados · 📷 {fotos} fotos
+                      </Text>
+                    </View>
+                  );
+                })
               )}
             </SectionCard>
           </View>
