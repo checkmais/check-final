@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Relatório de Vistoria - VIS-2026-001</title>
+  <style>
+    * { margin: 0; padding: 0; }
+    body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; padding: 20px; background: #f5f5f5; }
+    .page { page-break-after: always; max-width: 210mm; margin: 0 auto 40px; padding: 40px; background: white; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+    .header { text-align: center; margin-bottom: 40px; border-bottom: 3px solid #0a7ea4; padding-bottom: 20px; }
+    .logo { font-size: 32px; font-weight: bold; color: #0a7ea4; margin-bottom: 10px; }
+    .title { font-size: 24px; font-weight: bold; color: #333; }
+    .section { margin-bottom: 30px; }
+    .section-title { font-size: 16px; font-weight: bold; color: #0a7ea4; margin-bottom: 15px; border-left: 4px solid #0a7ea4; padding-left: 10px; }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .box { background: #f5f5f5; padding: 15px; border-radius: 5px; }
+    .label { font-size: 11px; color: #666; font-weight: bold; text-transform: uppercase; margin-bottom: 5px; }
+    .value { font-size: 14px; color: #333; }
+    table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+    th { background: #0a7ea4; color: white; padding: 10px; text-align: left; font-size: 12px; }
+    td { padding: 10px; border-bottom: 1px solid #eee; font-size: 13px; }
+    tr:nth-child(even) { background: #f9f9f9; }
+    .status { display: inline-block; padding: 4px 8px; border-radius: 3px; font-size: 11px; font-weight: bold; }
+    .approved { background: #d1fae5; color: #065f46; }
+    .rejected { background: #fee2e2; color: #7f1d1d; }
+    .na { background: #e5e7eb; color: #374151; }
+    .footer { margin-top: 40px; padding-top: 20px; border-top: 1px solid #ddd; text-align: center; font-size: 11px; color: #999; }
+    .signature-table { margin-top: 40px; }
+    .signature-cell { text-align: center; padding: 50px 20px; }
+    .signature-line { border-top: 1px solid #333; margin-top: 20px; font-size: 12px; }
+    .summary-box { background: #f0fdf4; padding: 20px; border-radius: 5px; border-left: 4px solid #10B981; }
+    .summary-text { font-size: 14px; color: #166534; line-height: 1.8; }
+    @media print {
+      body { background: white; }
+      .page { box-shadow: none; margin: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="header">
+      <div class="logo">✓ CHECK+</div>
+      <div class="title">Relatório de Vistoria</div>
+      <div style="font-size: 14px; color: #666; margin-top: 5px;">VIS-2026-001</div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Informações da Vistoria</div>
+      <div class="grid">
+        <div class="box">
+          <div class="label">Tipo</div>
+          <div class="value">Entrega de Chaves</div>
+        </div>
+        <div class="box">
+          <div class="label">Data</div>
+          <div class="value">26/03/2026</div>
+        </div>
+        <div class="box">
+          <div class="label">Hora</div>
+          <div class="value">14:30</div>
+        </div>
+        <div class="box">
+          <div class="label">ID</div>
+          <div class="value">VIS-2026-001</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Dados do Cliente</div>
+      <table>
+        <tr>
+          <th>Campo</th>
+          <th>Valor</th>
+        </tr>
+        <tr>
+          <td>Nome</td>
+          <td>João Silva Santos</td>
+        </tr>
+        <tr>
+          <td>Email</td>
+          <td>joao.silva@email.com</td>
+        </tr>
+        <tr>
+          <td>Telefone</td>
+          <td>(11) 98765-4321</td>
+        </tr>
+        <tr>
+          <td>Endereço</td>
+          <td>Rua das Flores, 123 - Apto 456 - Vila Mariana, São Paulo, SP</td>
+        </tr>
+        <tr>
+          <td>CEP</td>
+          <td>01234-567</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Dados do Vistoriador</div>
+      <table>
+        <tr>
+          <th>Campo</th>
+          <th>Valor</th>
+        </tr>
+        <tr>
+          <td>Nome</td>
+          <td>Maria Oliveira</td>
+        </tr>
+        <tr>
+          <td>CPF</td>
+          <td>123.456.789-00</td>
+        </tr>
+        <tr>
+          <td>Email</td>
+          <td>maria.oliveira@checkplus.com.br</td>
+        </tr>
+        <tr>
+          <td>Telefone</td>
+          <td>(11) 99876-5432</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Condições da Vistoria</div>
+      <div class="grid">
+        <div class="box">
+          <div class="label">Clima</div>
+          <div class="value">Ensolarado</div>
+        </div>
+        <div class="box">
+          <div class="label">Acesso</div>
+          <div class="value">Fácil</div>
+        </div>
+        <div class="box">
+          <div class="label">Iluminação</div>
+          <div class="value">Boa</div>
+        </div>
+        <div class="box">
+          <div class="label">Ocupação</div>
+          <div class="value">Vazio</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="section">
+      <div class="section-title">Checklist - Sala de Estar (Área Interna)</div>
+      <table>
+        <tr>
+          <th style="width: 20%;">Status</th>
+          <th>Teste</th>
+        </tr>
+        <tr>
+          <td><span class="status approved">✓ APROVADO</span></td>
+          <td>Comprimento conforme projeto</td>
+        </tr>
+        <tr>
+          <td><span class="status approved">✓ APROVADO</span></td>
+          <td>Largura conforme projeto</td>
+        </tr>
+        <tr>
+          <td><span class="status approved">✓ APROVADO</span></td>
+          <td>Pé-direito conforme especificado</td>
+        </tr>
+        <tr>
+          <td><span class="status approved">✓ APROVADO</span></td>
+          <td>Tipo de revestimento conforme memorial</td>
+        </tr>
+        <tr>
+          <td><span class="status approved">✓ APROVADO</span></td>
+          <td>Pintura uniforme</td>
+        </tr>
+        <tr>
+          <td><span class="status rejected">✕ REPROVADO</span></td>
+          <td>Revestimentos sem trincas ou peças ocas <em>(1 foto anexada)</em></td>
+        </tr>
+        <tr>
+          <td><span class="status approved">✓ APROVADO</span></td>
+          <td>Rejuntes uniformes</td>
+        </tr>
+        <tr>
+          <td><span class="status approved">✓ APROVADO</span></td>
+          <td>Piso conforme memorial</td>
+        </tr>
+        <tr>
+          <td><span class="status approved">✓ APROVADO</span></td>
+          <td>Nivelamento adequado</td>
+        </tr>
+        <tr>
+          <td><span class="status approved">✓ APROVADO</span></td>
+          <td>Sem peças soltas ou ocas</td>
+        </tr>
+        <tr>
+          <td><span class="status approved">✓ APROVADO</span></td>
+          <td>Teto sem fissuras ou manchas</td>
+        </tr>
+        <tr>
+          <td><span class="status approved">✓ APROVADO</span></td>
+          <td>Esquadrias funcionando adequadamente</td>
+        </tr>
+        <tr>
+          <td><span class="status approved">✓ APROVADO</span></td>
+          <td>Vidros íntegros</td>
+        </tr>
+        <tr>
+          <td><span class="status approved">✓ APROVADO</span></td>
+          <td>Instalações elétricas conforme projeto</td>
+        </tr>
+        <tr>
+          <td><span class="status approved">✓ APROVADO</span></td>
+          <td>Tomadas funcionando</td>
+        </tr>
+        <tr>
+          <td><span class="status approved">✓ APROVADO</span></td>
+          <td>Interruptores funcionando</td>
+        </tr>
+        <tr>
+          <td><span class="status na">NA</span></td>
+          <td>Instalações hidráulicas (não aplicável)</td>
+        </tr>
+        <tr>
+          <td><span class="status approved">✓ APROVADO</span></td>
+          <td>Sem manchas de umidade</td>
+        </tr>
+        <tr>
+          <td><span class="status approved">✓ APROVADO</span></td>
+          <td>Ambiente limpo</td>
+        </tr>
+      </table>
+      <div style="background: #fffbea; padding: 15px; border-left: 4px solid #f59e0b; border-radius: 5px; margin-top: 15px;">
+        <div style="font-size: 12px; font-weight: bold; color: #d97706; text-transform: uppercase; margin-bottom: 5px;">Observações</div>
+        <div style="font-size: 13px; color: #333;">Sala em perfeito estado. Pequeno reparo necessário na parede (trinca superficial). Recomenda-se retocar a pintura no local.</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Checklist - Cozinha (Área Interna)</div>
+      <table>
+        <tr>
+          <th style="width: 20%;">Status</th>
+          <th>Teste</th>
+        </tr>
+        <tr>
+          <td><span class="status approved">✓ APROVADO</span></td>
+          <td>Comprimento conforme projeto</td>
+        </tr>
+        <tr>
+          <td><span class="status approved">✓ APROVADO</span></td>
+          <td>Largura conforme projeto</td>
+        </tr>
+        <tr>
+          <td><span class="status approved">✓ APROVADO</span></td>
+          <td>Pintura uniforme</td>
+        </tr>
+        <tr>
+          <td><span class="status approved">✓ APROVADO</span></td>
+          <td>Piso conforme memorial</td>
+        </tr>
+        <tr>
+          <td><span class="status approved">✓ APROVADO</span></td>
+          <td>Nivelamento adequado</td>
+        </tr>
+        <tr>
+          <td><span class="status approved">✓ APROVADO</span></td>
+          <td>Teto sem fissuras</td>
+        </tr>
+        <tr>
+          <td><span class="status approved">✓ APROVADO</span></td>
+          <td>Esquadrias funcionando</td>
+        </tr>
+        <tr>
+          <td><span class="status approved">✓ APROVADO</span></td>
+          <td>Instalações elétricas funcionando</td>
+        </tr>
+        <tr>
+          <td><span class="status approved">✓ APROVADO</span></td>
+          <td>Instalações hidráulicas funcionando</td>
+        </tr>
+        <tr>
+          <td><span class="status approved">✓ APROVADO</span></td>
+          <td>Sem vazamentos</td>
+        </tr>
+        <tr>
+          <td><span class="status approved">✓ APROVADO</span></td>
+          <td>Louças e metais conforme memorial</td>
+        </tr>
+        <tr>
+          <td><span class="status approved">✓ APROVADO</span></td>
+          <td>Sem manchas de umidade</td>
+        </tr>
+        <tr>
+          <td><span class="status approved">✓ APROVADO</span></td>
+          <td>Ambiente limpo</td>
+        </tr>
+      </table>
+      <div style="background: #fffbea; padding: 15px; border-left: 4px solid #f59e0b; border-radius: 5px; margin-top: 15px;">
+        <div style="font-size: 12px; font-weight: bold; color: #d97706; text-transform: uppercase; margin-bottom: 5px;">Observações</div>
+        <div style="font-size: 13px; color: #333;">Cozinha em excelente estado. Todos os itens aprovados. Pronta para uso.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="section">
+      <div class="section-title">Resumo Geral</div>
+      <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 20px;">
+        <div style="background: #f9f9f9; padding: 15px; border-radius: 5px; text-align: center; border-left: 4px solid #10B981;">
+          <div style="font-size: 24px; font-weight: bold; color: #10B981;">33</div>
+          <div style="font-size: 12px; color: #666; margin-top: 5px;">Testes Aprovados</div>
+        </div>
+        <div style="background: #f9f9f9; padding: 15px; border-radius: 5px; text-align: center; border-left: 4px solid #EF4444;">
+          <div style="font-size: 24px; font-weight: bold; color: #EF4444;">1</div>
+          <div style="font-size: 12px; color: #666; margin-top: 5px;">Testes Reprovados</div>
+        </div>
+        <div style="background: #f9f9f9; padding: 15px; border-radius: 5px; text-align: center; border-left: 4px solid #9CA3AF;">
+          <div style="font-size: 24px; font-weight: bold; color: #9CA3AF;">2</div>
+          <div style="font-size: 12px; color: #666; margin-top: 5px;">Não Aplicável</div>
+        </div>
+        <div style="background: #f9f9f9; padding: 15px; border-radius: 5px; text-align: center; border-left: 4px solid #0a7ea4;">
+          <div style="font-size: 24px; font-weight: bold; color: #0a7ea4;">97.1%</div>
+          <div style="font-size: 12px; color: #666; margin-top: 5px;">Taxa de Aprovação</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Conclusão</div>
+      <div class="summary-box">
+        <p class="summary-text">
+          <strong>Status: APROVADO COM RESSALVAS</strong><br><br>
+          A vistoria foi realizada conforme os padrões estabelecidos. Foi identificado 1 item que necessita de atenção e correção (trinca superficial na parede da sala de estar). A propriedade está em condições de entrega com ressalvas. Recomenda-se realizar o reparo indicado antes da entrega final das chaves ao cliente.
+        </p>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Assinaturas</div>
+      <table class="signature-table">
+        <tr>
+          <td class="signature-cell">
+            <div class="signature-line">
+              Maria Oliveira<br>
+              Vistoriador
+            </div>
+          </td>
+          <td class="signature-cell">
+            <div class="signature-line">
+              João Silva Santos<br>
+              Cliente
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="footer">
+      <p>Relatório de Vistoria VIS-2026-001</p>
+      <p>© 2026 Check+ Vistorias - Todos os direitos reservados</p>
+      <p>Gerado em 26/03/2026 às 14:35</p>
+    </div>
+  </div>
+</body>
+</html>
